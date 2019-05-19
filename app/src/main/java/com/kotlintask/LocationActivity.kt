@@ -26,13 +26,13 @@ class LocationActivity : AppCompatActivity() {
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
     private var mAlreadyStartedService = false
-    private var userName=""
+    private var userName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location)
-        if (intent!=null){
-           userName= intent.getStringExtra("userName")
+        if (intent != null) {
+            userName = intent.getStringExtra("userName")
         }
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 object : BroadcastReceiver() {
@@ -55,13 +55,15 @@ class LocationActivity : AppCompatActivity() {
         }
     }
 
-    public override fun onDestroy() {
+    private fun getCurrentLocation() {
+        if (isGooglePlayServicesAvailable()) {
+            startStep2(null)
 
-        stopService(Intent(this, LocationBackgroundService::class.java))
-        mAlreadyStartedService = false
-
-        super.onDestroy()
+        } else {
+            Toast.makeText(applicationContext, R.string.no_google_playservice_available, Toast.LENGTH_LONG).show()
+        }
     }
+
 
     private fun requestPermissions() {
 
@@ -175,12 +177,12 @@ class LocationActivity : AppCompatActivity() {
         return true
     }
 
-    private fun getCurrentLocation() {
-        if (isGooglePlayServicesAvailable()) {
-            startStep2(null)
 
-        } else {
-            Toast.makeText(applicationContext, R.string.no_google_playservice_available, Toast.LENGTH_LONG).show()
-        }
+    public override fun onDestroy() {
+
+        stopService(Intent(this, LocationBackgroundService::class.java))
+        mAlreadyStartedService = false
+
+        super.onDestroy()
     }
 }
