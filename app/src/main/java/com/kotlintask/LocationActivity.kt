@@ -47,7 +47,7 @@ class LocationActivity : AppCompatActivity() {
                 }, IntentFilter(ACTION_LOCATION_BROADCAST)
         )
         start_button.setOnClickListener {
-            startStep1()
+            getCurrentLocation()
         }
         stop_button.setOnClickListener {
             stopService(Intent(this, LocationBackgroundService::class.java))
@@ -175,7 +175,7 @@ class LocationActivity : AppCompatActivity() {
         return true
     }
 
-    private fun startStep1() {
+    private fun getCurrentLocation() {
         if (isGooglePlayServicesAvailable()) {
             startStep2(null)
 
