@@ -121,18 +121,6 @@ class LocationActivity : AppCompatActivity() {
         return true
     }
 
-    private fun startStep3() {
-
-        if (!mAlreadyStartedService) {
-
-            start_service_text_view.text = getString(R.string.start_service)
-            val intent = Intent(this, LocationBackgroundService::class.java)
-            startService(intent)
-
-            mAlreadyStartedService = true
-
-        }
-    }
 
     private fun promptInternetConnect() {
         val builder = AlertDialog.Builder(this@LocationActivity)
@@ -155,6 +143,19 @@ class LocationActivity : AppCompatActivity() {
 
         val dialog = builder.create()
         dialog.show()
+    }
+
+    private fun startStep3() {
+
+        if (!mAlreadyStartedService) {
+
+            start_service_text_view.text = getString(R.string.start_service)
+            val intent = Intent(this, LocationBackgroundService::class.java)
+            startService(intent)
+
+            mAlreadyStartedService = true
+
+        }
     }
 
     private fun startStep2(dialog: DialogInterface?): Boolean {
